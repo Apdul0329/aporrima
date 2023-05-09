@@ -64,3 +64,16 @@ train_x, train_y = scaler_set.standard(x=train_x, y=train_y)
 # optimizer_set 모듈의 sgd()릍 통한 최적화 예시
 optimizer_set.sgd(model=model, x=train_x, y=train_y, lr=0.01)
 ```
+
+## address_to_long_and_lat.py
+
+### Description
+
+> Kakao Map API를 사용하여 지오코딩으로 주소(지번 주소, 도로명 주소)를 위경도로 바꿔주는 함수 모듈화 함
+> 매개 변수로 string 타입의 address를 받음
+```python
+from address_to_long_and_lat import address_to_latlon
+
+# 함수 실행 후 Kakao Map API의 앱 키를 입력해야 함
+address_to_latlon('경기도 용인시 수지구 죽전로 152')
+```
