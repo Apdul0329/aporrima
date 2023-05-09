@@ -76,6 +76,8 @@ optimizer_set.sgd(model=model, x=train_x, y=train_y, lr=0.01)
 
 > Kakao Map API를 사용하여 지오코딩으로 주소(지번 주소, 도로명 주소)를 위경도로 바꿔주는 함수 모듈화 함
 > 매개 변수로 string 타입의 address를 받음
+
+### Usage
 ```python
 from address_to_long_and_lat import address_to_latlon
 
