@@ -1,10 +1,10 @@
 # Infrastructure Recommendation
 
 ## Contents
-1. [multiple_regression_model.py](#multiple_regression_model.py)
-2. [scaler_set.py](#scaler_set.py)
-3. [optimizer_set.py](#optimizer-set.py)
-4. [address_to_long_and_lat.py](#address-to-long-and-lat.py)
+1. [multiple_regression_model.py](#multiple_regression_modelpy)
+2. [scaler_set.py](#scaler_setpy)
+3. [optimizer_set.py](#optimizersetpy)
+4. [address_to_long_and_lat.py](#address-to-long-and-latpy)
 ## multiple_regression_model.py
 
 ### Description
