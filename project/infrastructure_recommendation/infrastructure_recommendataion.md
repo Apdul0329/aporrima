@@ -5,8 +5,8 @@
 2. [scaler_set.py](#scaler_setpy)
 3. [optimizer_set.py](#optimizer_setpy)
 4. [address_to_long_and_lat.py](#address_to_long_and_latpy)
-5. [geoDataFrame_init.py](#geoDataFrame init)
-6. [geoDataFrame_using.py](#geoDataFrame additional function)
+6. [geoDataFrame_init.py](#geoDataFrame_initpy)
+7. [geoDataFrame_using.py](#geoDataFrame_usingpy)
 ## multiple_regression_model.py
 
 ### Description
