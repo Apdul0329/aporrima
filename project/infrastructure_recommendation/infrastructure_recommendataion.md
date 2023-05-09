@@ -84,3 +84,75 @@ from address_to_long_and_lat import address_to_latlon
 # 함수 실행 후 Kakao Map API의 앱 키를 입력해야 함
 address_to_latlon('경기도 용인시 수지구 죽전로 152')
 ```
+
+## geoDataFrame_init.py
+
+### Description
+
+> csv파일 또는 shp 파일 등을 읽는 것부터 기본적인 데이터 처리(위도 경도 값을 통한 geometry 생성, h3 생성 등)를 모듈화
+> 
+
+### Parameters
+
+- `file_lo` : 파일 위치
+- `en` : 인코딩 방식 설정 (default : en=cp949)
+- `input_df` : 작업할 dataFrame (geoDataFrame도 가능)
+- `lat_column`, `lon_column` : 각각 위도와 경도 column명 (default : lat=‘lat’, lon=‘lon’)
+- `crs` : 좌표계 설정 (default : crs=4326)
+- `res` : h3 라이브러리의 resolution (default : res=8)
+- `k` : h3 라이브러리의 k (default : k=11)
+
+### Usage
+
+```python
+import geoDataFrame_init
+
+#readfile_to_gdf
+gdf1= geoDataFrame_init.readfile_to_gdf(file_lo ,en)
+gdf2 = geoDataFrame_init.readfile_to_gdf(file_lo)
+
+#fill_geometry
+gdf1 = geoDataFrame_init.fill_geometry(input_df,'위도 column 명','경도 column 명',4326)
+gdf2 = geoDataFrame_init.fill_geometry(input_df)
+
+#geo_to_lat_lon
+gdf1 = geoDataFrame_init.geo_to_lat_lon(input_df,4326)
+gdf2 = geoDataFrame_init.geo_to_lat_lon(input_df)
+
+#make_h3
+gdf1 = geoDataFrame_init.make_h3(input_df,'위도 column 명','경도 column 명',4326,8,10)
+gdf2 = geoDataFrame_init.make_h3(input_df)
+```
+
+## geoDataFrame_using.py
+
+### Description
+
+> geoDataFrame를 사용하여 지도를 표시하거나 두 개의 geoDataFrame를 비교하여 겹치는 데이터를 찾는 함수 모듈화
+> 
+
+### Parameters
+
+- `df_list` : map에 표시할 geoDataFrame 리스트 (geoDataFrame 1개도 가능 리스트X)
+- `lat`, `lon` : 각각 지도의 중심이 되는 위도와 경도 값
+- `tiles` , `zoom_start` : folium라이브러리의 tiles, zoom_start (default : tiles="OpenStreetMap",zoom_start=11)
+- `lat_column`, `lon_column` : 각각 위도와 경도 column명 (default : lat = ‘lat’, lon = ‘lon’)
+- `df_a` : 속하는지 확인할 geoDataFrame
+- `df_b` : 비교 대상이 되는 geoDataFrame
+- `crs` : 좌표계 설정 (default : crs=4326)
+
+### Usage
+
+```python
+import geoDataFrame_init
+
+#display_gdf_map
+display(geoDataFrame_using.display_gdf_map(df_list,lat,lon,"OpenStreetMap",11))
+display(geoDataFrame_using.display_gdf_map(df_list,lat,lon))
+display(geoDataFrame_using.display_gdf_map(df,lat,lon))
+
+#check_intersect
+gdf1 = geoDataFrame_init.check_intersect(df_a, df_b,4326)
+gdf2 = geoDataFrame_init.check_intersect(df_a, df_b)
+
+```
