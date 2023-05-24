@@ -2,7 +2,8 @@
 
 source ./get_pid.sh
 
-USERNAME="hadoop"
+USERNAME=$(whoami)
+HOST_IP=$(hostname -I)
 HIBENCH_HOME=/home/hadoop/HiBench
 HADOOP_HOME=/home/hadoop/hadoop
 WORDCOUNT_CMD="$HIBENCH_HOME/bin/workloads/micro/wordcount/spark/run.sh"
@@ -57,7 +58,7 @@ while IFS= read -r HOSTNAME; do
     IP=$(grep -w "$HOSTNAME" /etc/hosts | awk '{print $1}')
     
     if [[ -n $IP ]]; then
-        ssh -o StrictHostKeyChecking=no "$USERNAME"@"$IP" "./kill_datanode_process.sh" &
+        ssh -o StrictHostKeyChecking=no "$USERNAME"@"$IP" "./kill_datanode_process.sh ${USERNAME} ${HOST_IP}" &
     else
         echo "Unable to find IP address for HOSTNAME: $HOSTNAME"
     fi
