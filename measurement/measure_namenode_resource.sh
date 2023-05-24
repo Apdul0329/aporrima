@@ -61,7 +61,7 @@ while IFS= read -r HOSTNAME; do
     IP=$(grep -w "$HOSTNAME" /etc/hosts | awk '{print $1}')
     
     if [[ -n $IP ]]; then
-        ssh -o StrictHostKeyChecking=no "$USERNAME"@"$IP" "./kill_datanode_process.sh ${USERNAME} ${HOST_IP}" &
+        ssh -o StrictHostKeyChecking=no "$USERNAME"@"$IP" "./kill_datanode_process.sh ${USERNAME} ${HOST_IP} ${RESULT_PATH}" &
     else
         echo "Unable to find IP address for HOSTNAME: $HOSTNAME"
     fi
