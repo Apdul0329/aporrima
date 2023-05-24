@@ -92,3 +92,4 @@ if [ -f "$EXECUTORLAUNCHER_OUTPUT_FILE" ]; then
   rm $EXECUTORLAUNCHER_OUTPUT_FILE
 fi
 rm -r result
+rm -rf aporrima
