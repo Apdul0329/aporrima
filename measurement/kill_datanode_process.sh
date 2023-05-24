@@ -10,11 +10,11 @@ NODEMANAGER_OUTPUT_FILE="nodemanager_top.log"
 EXECUTORBACKEND_OUTPUT_FILE="yarnexecutorbackend_top.log"
 EXECUTORLAUNCHER_OUTPUT_FILE="executorlauncher_top.log"
 
-RESULT_PATH="./result"
-DATANODE_CSV_PATH="./result/${HOST_IP}_datanode_result.csv"
-NODEMANAGER_CSV_PATH="./result/${HOST_IP}_nodemanager_result.csv"
-EXECUTORBACKEND_CSV_PATH="./result/${HOST_IP}_executorbackend_result.csv"
-EXECUTORLAUNCHER_CSV_PATH="./result/${HOST_IP}_executorlauncher_result.csv"
+RESULT_PATH=$3
+DATANODE_CSV_PATH="./$RESULT_PATH/${HOST_IP}_datanode_result.csv"
+NODEMANAGER_CSV_PATH="./$RESULT_PATH/${HOST_IP}_nodemanager_result.csv"
+EXECUTORBACKEND_CSV_PATH="./$RESULT_PATH/${HOST_IP}_executorbackend_result.csv"
+EXECUTORLAUNCHER_CSV_PATH="./$RESULT_PATH/${HOST_IP}_executorlauncher_result.csv"
 
 DATANODE_PID=$(grep "DataNode" "$PID_FILE" | awk '{print $1}')
 NODEMANAGER_PID=$(grep "NodeManager" "$PID_FILE" | awk '{print $1}')
@@ -24,6 +24,8 @@ EXECUTORLAUNCHER_PID=$(grep "ExecutorLauncher" "$PID_FILE" | awk '{print $1}')
 while IFS= read -r PID; do
     kill "$PID"
 done < $TOP_PID_FILE
+
+mkdir -p $RESULT_PATH
 
 DATANODE_CPU_USAGE=$(grep -oP "^\s*$DATANODE_PID\s+\S+\s+\S+\s+\S+\s+\S+\s+\S+\s+\S+\s+\S+\s+\K\S+" "$DATANODE_OUTPUT_FILE")
 DATANODE_CPU_USAGE=$(echo "$DATANODE_CPU_USAGE" | sed 's/%CPU//g')
@@ -79,7 +81,7 @@ if [ -f "$EXECUTORLAUNCHER_OUTPUT_FILE" ]; then
     done
 fi
 
-scp -o StrictHostKeyChecking=no $RESULT_PATH/* $NAMENODE_USERNAME@$NAMENODE_IP:/home/$NAMENODE_USERNAME/result/
+scp -o StrictHostKeyChecking=no $RESULT_PATH/* $NAMENODE_USERNAME@$NAMENODE_IP:/home/$NAMENODE_USERNAME/$RESULT_PATH/
 
 rm $PID_FILE
 rm $TOP_PID_FILE
@@ -89,4 +91,4 @@ rm $EXECUTORBACKEND_OUTPUT_FILE
 if [ -f "$EXECUTORLAUNCHER_OUTPUT_FILE" ]; then
   rm $EXECUTORLAUNCHER_OUTPUT_FILE
 fi
-rm result/*
+rm -r result
