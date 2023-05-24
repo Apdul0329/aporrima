@@ -33,8 +33,8 @@ while IFS= read -r HOSTNAME; do
     IP=$(grep -w "$HOSTNAME" /etc/hosts | awk '{print $1}')
     
     if [[ -n $IP ]]; then
-        ssh -o StrictHostKeyChecking=no "$USERNAME"@"$IP" "git clone https://github.com/Apdul0329/aporrima.git && chmod -R +x ./aporrima/measurement/*"
-        ssh -o StrictHostKeyChecking=no "$USERNAME"@"$IP" "./aporrima/measurement/measure_datanode_resource.sh" &
+        ssh -o StrictHostKeyChecking=no "$USERNAME"@"$IP" "git clone https://github.com/Apdul0329/aporrima.git && chmod -R +x ./aporrima/measurement/* && ./aporrima/measurement/measure_datanode_resource.sh" &
+        #ssh -o StrictHostKeyChecking=no "$USERNAME"@"$IP" "./aporrima/measurement/measure_datanode_resource.sh" &
     else
         echo "Unable to find IP address for HOSTNAME: $HOSTNAME"
     fi
