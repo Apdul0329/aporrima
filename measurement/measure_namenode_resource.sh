@@ -23,6 +23,16 @@ SPARKSUBMIT_CSV_PATH="./$RESULT_PATH/sparksubmit_result.csv"
 
 mkdir -p $RESULT_PATH
 
+while IFS= read -r HOSTNAME; do
+    IP=$(grep -w "$HOSTNAME" /etc/hosts | awk '{print $1}')
+    
+    if [[ -n $IP ]]; then
+        ssh -o StrictHostKeyChecking=no "$USERNAME"@"$IP" "git clone https://github.com/Apdul0329/aporrima.git"
+    else
+        echo "Unable to find IP address for HOSTNAME: $HOSTNAME"
+    fi
+done < ./hadoop/etc/hadoop/workers
+
 top -b -d 1 -p $NAMENODE_PID > $NAMENODE_OUTPUT_FILE &
 TOP_NAMENODE_PID=$!
 
@@ -33,7 +43,6 @@ while IFS= read -r HOSTNAME; do
     IP=$(grep -w "$HOSTNAME" /etc/hosts | awk '{print $1}')
     
     if [[ -n $IP ]]; then
-        ssh -o StrictHostKeyChecking=no "$USERNAME"@"$IP" "git clone https://github.com/Apdul0329/aporrima.git"
         ssh -o StrictHostKeyChecking=no "$USERNAME"@"$IP" "./aporrima/measurement/measure_datanode_resource.sh" &
     else
         echo "Unable to find IP address for HOSTNAME: $HOSTNAME"
