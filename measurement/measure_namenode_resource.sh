@@ -36,7 +36,7 @@ while IFS= read -r HOSTNAME; do
 done < ./hadoop/etc/hadoop/workers
 
 for ((i = 0; i < ${#IP_ARRAY[@]}; i++)); do
-  ssh -o StrictHostKeyChecking=no "$USERNAME"@"${IP_ARRAY[i]]" "git clone https://github.com/Apdul0329/aporrima.git"
+  ssh -o StrictHostKeyChecking=no "$USERNAME"@"${IP_ARRAY[i]}" "git clone https://github.com/Apdul0329/aporrima.git"
 done
 
 top -b -d 1 -p $NAMENODE_PID > $NAMENODE_OUTPUT_FILE &
