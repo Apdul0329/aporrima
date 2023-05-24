@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ./get_pid.sh
+source ./aporrima/measurement/get_pid.sh
 
 USERNAME=$(whoami)
 HOST_IP=$(hostname -I)
@@ -33,7 +33,8 @@ while IFS= read -r HOSTNAME; do
     IP=$(grep -w "$HOSTNAME" /etc/hosts | awk '{print $1}')
     
     if [[ -n $IP ]]; then
-        ssh -o StrictHostKeyChecking=no "$USERNAME"@"$IP" "./measure_datanode_resource.sh" &
+        ssh -o StrictHostKeyChecking=no "$USERNAME"@"$IP" "git clone https://github.com/Apdul0329/aporrima.git"
+        ssh -o StrictHostKeyChecking=no "$USERNAME"@"$IP" "./aporrima/measurement/measure_datanode_resource.sh" &
     else
         echo "Unable to find IP address for HOSTNAME: $HOSTNAME"
     fi
@@ -61,7 +62,7 @@ while IFS= read -r HOSTNAME; do
     IP=$(grep -w "$HOSTNAME" /etc/hosts | awk '{print $1}')
     
     if [[ -n $IP ]]; then
-        ssh -o StrictHostKeyChecking=no "$USERNAME"@"$IP" "./kill_datanode_process.sh ${USERNAME} ${HOST_IP} ${RESULT_PATH}" &
+        ssh -o StrictHostKeyChecking=no "$USERNAME"@"$IP" "./aporrima/measurement/kill_datanode_process.sh ${USERNAME} ${HOST_IP} ${RESULT_PATH}" &
     else
         echo "Unable to find IP address for HOSTNAME: $HOSTNAME"
     fi

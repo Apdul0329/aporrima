@@ -10,11 +10,11 @@ case $response in
     1)
         OPERATION=sort
         ${HIBENCH_HOME}/bin/workloads/micro/$OPERATION/prepare/prepare.sh
-        ./measure_namenode_resource.sh $OPERATION
+        ./aporrima/measurement/measure_namenode_resource.sh $OPERATION
         ;;
     2)
         OPERATION=wordcount
         ${HIBENCH_HOME}/bin/workloads/micro/$OPERATION/prepare/prepare.sh
-        ./measure_namenode_resource.sh $OPERATION
+        ./aporrima/measurement/measure_namenode_resource.sh $OPERATION
         ;;
 esac

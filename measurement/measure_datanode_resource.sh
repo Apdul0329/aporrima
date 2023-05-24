@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ./get_pid.sh
+source ./aporrima/measurement/get_pid.sh
 
 DATANODE_PID=$(get_datanode_pid)
 NODEMANAGER_PID=$(get_nodemanager_pid)
