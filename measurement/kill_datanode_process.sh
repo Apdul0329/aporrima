@@ -1,5 +1,8 @@
 #!/bin/bash
 
+NAMENODE_USERNAME=$1
+NAMENODE_IP=$2
+HOST_IP=$(hostname -I | tr -d ' ')
 PID_FILE="pid.txt"
 TOP_PID_FILE="top_pid.txt"
 DATANODE_OUTPUT_FILE="datanode_top.log"
@@ -7,10 +10,11 @@ NODEMANAGER_OUTPUT_FILE="nodemanager_top.log"
 EXECUTORBACKEND_OUTPUT_FILE="yarnexecutorbackend_top.log"
 EXECUTORLAUNCHER_OUTPUT_FILE="executorlauncher_top.log"
 
-DATANODE_CSV_PATH="./result/datanode_result.csv"
-NODEMANAGER_CSV_PATH="./result/nodemanager_result.csv"
-EXECUTORBACKEND_CSV_PATH="./result/executorbackend_result.csv"
-EXECUTORLAUNCHER_CSV_PATH="./result/executorlauncher_result.csv"
+RESULT_PATH="./result"
+DATANODE_CSV_PATH="./result/${HOST_IP}_datanode_result.csv"
+NODEMANAGER_CSV_PATH="./result/${HOST_IP}_nodemanager_result.csv"
+EXECUTORBACKEND_CSV_PATH="./result/${HOST_IP}_executorbackend_result.csv"
+EXECUTORLAUNCHER_CSV_PATH="./result/${HOST_IP}_executorlauncher_result.csv"
 
 DATANODE_PID=$(grep "DataNode" "$PID_FILE" | awk '{print $1}')
 NODEMANAGER_PID=$(grep "NodeManager" "$PID_FILE" | awk '{print $1}')
@@ -74,3 +78,5 @@ if [ -f "$EXECUTORLAUNCHER_OUTPUT_FILE" ]; then
         echo "${EXECUTORLAUNCHER_CPU_ARRAY[i]},${EXECUTORLAUNCHER_MEM_ARRAY[i]}" >> $EXECUTORLAUNCHER_CSV_PATH
     done
 fi
+
+scp -o StrictHostKeyChecking=no $RESULT_PATH/* $NAMENODE_USERNAME@$NAMENODE_IP:/home/$NAMENODE_USERNAME/result/
