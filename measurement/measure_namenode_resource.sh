@@ -23,10 +23,21 @@ SPARKSUBMIT_CSV_PATH="./$RESULT_PATH/sparksubmit_result.csv"
 
 mkdir -p $RESULT_PATH
 
+IP_ARRAY=()
+
 while IFS= read -r HOSTNAME; do
     IP=$(grep -w "$HOSTNAME" /etc/hosts | awk '{print $1}')
-    ssh -o StrictHostKeyChecking=no "$USERNAME"@"$IP" "git clone https://github.com/Apdul0329/aporrima.git"
+
+    if [[ -n $IP ]]; then
+        IP_ARRAY+=("$IP")
+    else
+        echo "Unable to find IP address for HOSTNAME: $HOSTNAME"
+    fi
 done < ./hadoop/etc/hadoop/workers
+
+for ((i = 0; i < ${#IP_ARRAY[@]}; i++)); do
+  ssh -o StrictHostKeyChecking=no "$USERNAME"@"${IP_ARRAY[i]]" "git clone https://github.com/Apdul0329/aporrima.git"
+done
 
 top -b -d 1 -p $NAMENODE_PID > $NAMENODE_OUTPUT_FILE &
 TOP_NAMENODE_PID=$!
