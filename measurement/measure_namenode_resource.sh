@@ -4,21 +4,24 @@ source ./get_pid.sh
 
 USERNAME=$(whoami)
 HOST_IP=$(hostname -I)
-HIBENCH_HOME=/home/hadoop/HiBench
-HADOOP_HOME=/home/hadoop/hadoop
-WORDCOUNT_CMD="$HIBENCH_HOME/bin/workloads/micro/wordcount/spark/run.sh"
+OPERATION=$1
+NOW=$(date +%s)
+HIBENCH_HOME=/home/$USERNAME/HiBench
+HADOOP_HOME=/home/$USERNAME/hadoop
+CMD="$HIBENCH_HOME/bin/workloads/micro/$OPERATION/spark/run.sh"
 
 NAMENODE_PID=$(get_namenode_pid)
 RESOURCEMANAGER_PID=$(get_resourcemanager_pid)
 
+RESULT_PATH=result/$OPERATION/$NOW
 NAMENODE_OUTPUT_FILE="namenode_top.log"
 RESOURCEMANAGER_OUTPUT_FILE="resourcemanager_top.log"
 SPARKSUBMIT_OUTPUT_FILE="sparksubmit_top.log"
-NAMENODE_CSV_PATH="./result/namenode_result.csv"
-RESOURCEMANAGER_CSV_PATH="./result/resourcemanager_result.csv"
-SPARKSUBMIT_CSV_PATH="./result/sparksubmit_result.csv"
+NAMENODE_CSV_PATH="./$RESULT_PATH/namenode_result.csv"
+RESOURCEMANAGER_CSV_PATH="./$RESULT_PATH/resourcemanager_result.csv"
+SPARKSUBMIT_CSV_PATH="./$RESULT_PATH/sparksubmit_result.csv"
 
-
+mkdir -p $RESULT_PATH
 
 top -b -d 1 -p $NAMENODE_PID > $NAMENODE_OUTPUT_FILE &
 TOP_NAMENODE_PID=$!
@@ -36,7 +39,7 @@ while IFS= read -r HOSTNAME; do
     fi
 done < ./hadoop/etc/hadoop/workers
 
-$WORDCOUNT_CMD > /dev/null &
+$CMD > /dev/null &
 LAST_PID=$!
 
 SPARKSUBMIT_PID=$(get_sparksubmit_pid &)
