@@ -22,7 +22,6 @@ RESOURCEMANAGER_CSV_PATH="./$RESULT_PATH/resourcemanager_result.csv"
 SPARKSUBMIT_CSV_PATH="./$RESULT_PATH/sparksubmit_result.csv"
 
 mkdir -p $RESULT_PATH
-mkdir -p $RESULT_PATH/graph
 
 IP_ARRAY=()
 
