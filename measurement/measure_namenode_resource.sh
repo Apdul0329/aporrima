@@ -122,8 +122,10 @@ for ((i = 0; i < ${#SPARKSUBMIT_CPU_ARRAY[@]}; i++)); do
   echo "${SPARKSUBMIT_CPU_ARRAY[i]},${SPARKSUBMIT_MEM_ARRAY[i]}" >> $SPARKSUBMIT_CSV_PATH
 done
 
-cd $RESULT_PATH && jupyter nbconvert --execute --to python /home/$USERNAME/aporrima/measurement/make_graph.ipynb; cd
+cp ./aporrima/measurement/make_graph.ipynb ./$RESULT_PATH/
+jupyter nbconvert --execute --to python ./$RESULT_PATH/make_graph.ipynb
 
 rm $NAMENODE_OUTPUT_FILE
 rm $RESOURCEMANAGER_OUTPUT_FILE
 rm $SPARKSUBMIT_OUTPUT_FILE
+rm ./$RESULT_PATH/make_graph.ipynb
