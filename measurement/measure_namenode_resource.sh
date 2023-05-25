@@ -22,6 +22,7 @@ RESOURCEMANAGER_CSV_PATH="./$RESULT_PATH/resourcemanager_result.csv"
 SPARKSUBMIT_CSV_PATH="./$RESULT_PATH/sparksubmit_result.csv"
 
 mkdir -p $RESULT_PATH
+mkdir -p $RESULT_PATH/graph
 
 IP_ARRAY=()
 
@@ -121,6 +122,8 @@ echo "%CPU,%MEM" > $SPARKSUBMIT_CSV_PATH
 for ((i = 0; i < ${#SPARKSUBMIT_CPU_ARRAY[@]}; i++)); do
   echo "${SPARKSUBMIT_CPU_ARRAY[i]},${SPARKSUBMIT_MEM_ARRAY[i]}" >> $SPARKSUBMIT_CSV_PATH
 done
+
+cd $RESULT_PATH && jupyter nbconvert --execute --to python /home/$USERNAME/aporrima/measurement/make_graph.ipynb; cd
 
 rm $NAMENODE_OUTPUT_FILE
 rm $RESOURCEMANAGER_OUTPUT_FILE
